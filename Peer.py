@@ -19,8 +19,8 @@ class Peer:
         self.server_thread.start()
 
     def run_server(self):
-        # Start the server running
-        # Create a server socket to receive connections
+        ''' Start the server running
+        Create a server socket to receive connections'''
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(5)
@@ -39,7 +39,7 @@ class Peer:
             pass  # The server socket has been closed
 
     def handle_client(self, client_socket):
-        # Handle client requests
+        '''# Handle client requests'''
         request = client_socket.recv(1024).decode()
 
         if request == "list":
@@ -50,7 +50,7 @@ class Peer:
         client_socket.close()
 
     def send_file_list(self, client_socket):
-        # Send a file list
+        ''' Send a file list '''
         print('\n * Sending file list *')
         file_list = ''
         files = glob.glob(self.filepath + '*.*')
@@ -58,8 +58,8 @@ class Peer:
         client_socket.send(file_list.encode())
 
     def disconnect(self):
-        # Handle disconnects gracefully
-        # Stop the server thread and clean up resources
+        ''' Handle disconnects gracefully
+        Stop the server thread and clean up resources'''
         self.running = False
         self.server_socket.close()
         # Wait for the server thread to finish
